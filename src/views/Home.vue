@@ -9,6 +9,9 @@
         <div id="homeBiblioteca" v-else-if="this.$store.state.page==2"><biblioteca></biblioteca></div>
         <div id="homeInteractiva" v-else-if="this.$store.state.page==3"><tienda></tienda></div>
         <div id="homeTienda" v-else-if="this.$store.state.page==4"><tienda></tienda></div>
+        <div id="homeEditPub" v-else-if="this.$store.state.page==5"><editPublicacion></editPublicacion> </div>
+        <div id="homeEditProf" v-else-if="this.$store.state.page==6"> <editProfile></editProfile> </div>
+        <div id="estudiantes" v-else-if="this.$store.state.page==7"><estudiantes></estudiantes></div>
       </div>
     </div>
   </div>
@@ -21,9 +24,13 @@ import Cartelera from '../components/cartelera.vue'
 import Cursos from '../components/cursos.vue'
 import menuLateral from '../components/menuLateral.vue'
 import tienda from '../components/tienda.vue'
+import editPublicacion from '../components/editPublicacion.vue'
+import editProfile from '../components/editProfile.vue'
+import Estudiantes from '../components/estudiantes.vue'
 
 export default {
-  components: { barra,menuLateral,Cursos,Cartelera, Biblioteca,tienda},
+  components: { barra,menuLateral,Cursos,Cartelera, Biblioteca,tienda,editPublicacion,editProfile, Estudiantes},
+  
 
 }
 </script>

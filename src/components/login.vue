@@ -75,12 +75,12 @@ export default {
             response.json().then(data=>{
             console.log(data);
               if(data!=false){
-                
                 const builder = {
                     id: data.id,
                     name: data.name,
                     mail: data.mail,
-                    rol: data.rol
+                    rol: data.rol,
+                    avatar:data.avatar
                 };
                 this.$store.commit("storeUser", builder);
                 this.$store.commit("changeLogState");

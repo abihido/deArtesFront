@@ -1,6 +1,6 @@
 FROM node:10
 
-WORKDIR /usr/src/app/api
+WORKDIR /app
 
 COPY package*.json ./
 
@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 3080
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "serve"]

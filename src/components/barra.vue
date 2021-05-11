@@ -1,9 +1,10 @@
 <template>
     <div id="barra">
         <div id="cuenta">
-            <img id="foto" src="../resources/fotoDefault.png">
+            <img id="foto" class="pictureNew" :src="this.$store.state.avatar" v-if="this.$store.state.avatar!=undefined">
+            <img id="foto" src="../resources/fotoDefault.png" v-else>
              <div id="nombre">{{this.$store.state.name}}</div>
-            <button id="botonCuenta">Cuenta</button>
+            <button id="botonCuenta" v-on:click="cuenta()">Cuenta</button>
         </div>
         <img id="logo" src="../resources/logoBlanco.png">
     </div>    
@@ -11,7 +12,11 @@
 
 <script>
 export default {
-
+    methods:{
+        cuenta(){
+            this.$store.commit("setPage",6);
+        }
+    }
 }
 </script>
 

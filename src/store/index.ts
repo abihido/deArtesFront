@@ -13,15 +13,19 @@ export default new Vuex.Store({
     rol:'',
     loggued:false,
     page:0,
-    curso:undefined
+    curso:undefined,
+    avatar:undefined,
+    idSelected:undefined,
+    rolSelected:''
   },
   mutations: {
     storeUser(state,Builder){
       state.id=Builder.id,
       state.mail=Builder.mail,
       state.name=Builder.name,
-      state.rol=Builder.rol
-      state.page=0
+      state.rol=Builder.rol,
+      state.page=0,
+      state.avatar=Builder.avatar
     },
     changeLogState(state){
       state.loggued=!state.loggued;
@@ -43,7 +47,14 @@ export default new Vuex.Store({
     },
     setCurso(state,newCurso){
       state.curso=newCurso;
-    }
+    },
+    setAvatar(state,newAvatar){
+      state.avatar=newAvatar;
+    },
+    setPersonSelected(state,newPersonSelected){
+      state.idSelected=newPersonSelected.id;
+      state.rolSelected=newPersonSelected.rol;
+    },
   },
   actions: {
   },

@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "@types/js-cookie": "^2.2.6",
+    "blueimp-canvas-to-blob": "^3.28.0",
     "bootstrap-vue": "^2.17.3",
     "core-js": "^3.6.5",
     "js-cookie": "^2.2.1",
     "user-instagram": "^2.1.9",
     "vue": "^2.6.11",
+    "vue-image-upload-resize": "^2.3.0",
     "vue-router": "^3.2.0",
     "vue-simple-alert": "^1.1.1",
     "vuex": "^3.4.0",

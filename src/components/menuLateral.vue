@@ -6,6 +6,7 @@
             <div id ="biblioteca" class="menu" v-on:click="cambiarPagina(2,'biblioteca')">Biblioteca</div>
             <div id ="tareas" class="menu" v-on:click="cambiarPagina(3,'tareas')">Interactivo</div>
             <div id= "tienda" class="menu" v-on:click="cambiarPagina(4,'tienda')">Tienda</div>
+            <div id="estudiantes" class="menu" v-on:click="cambiarPagina(7,'estudiantes')" v-if="this.$store.state.rol=='adm'">Estudiantes</div>
             <div id ="botonesMenu">
                 <button class="botonMenuLateral">Ajustes</button>
                 <button class="botonMenuLateral" v-on:click="cerrarSesion()">Cerrar Sesion</button>
@@ -39,6 +40,9 @@ export default {
                 break;
                 case 4:
                     this.cambiarFondo('tienda');
+                break;
+                case 5:
+                    this.cambiarFondo('estudiantes');
                 break;
             }
         },

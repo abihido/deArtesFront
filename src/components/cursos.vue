@@ -13,8 +13,8 @@
                 <div id="tituloCurso">{{selectedName}}</div>
                 <div id="cursoContent">
                     <div id="publicaciones">
-                    <div id="publicacionCurso"></div>
-                    <div id="newPubButtom" v-if="this.$store.state.rol=='prof'">Modificar Publicaciones</div> 
+                        <div id="publicacionCurso"><publicacion></publicacion></div>
+                        <div id="newPubButtom" v-if="this.$store.state.rol=='mat'" v-on:click="edit()">Modificar Publicaciones</div> 
                     </div>
                     <div id="gridCurso">
                         <div class="optionCurso" id="tareas"><img id="tareasImg" class="menuCurso" src="../resources/tareasLogo.png">Tareas</div>
@@ -33,6 +33,7 @@
 </template>
 <script>
 import * as request from  './../services/request.service.js' ;
+import publicacion from '../components/publicacion.vue'
 export default {
     data(){
         return{
@@ -41,9 +42,16 @@ export default {
             names:[]
         };
     },
+    components:{
+        publicacion
+    },
     methods:{
         getNames(){
-            fetch(request.SERVER_URL+"/cursos/nombres/"+this.$store.state.id)
+            let rol= 0;
+            if(this.$store.state.rol=='mat'){
+                rol=1;
+            }
+            fetch(request.SERVER_URL+"/cursos/nombres/"+this.$store.state.id+"/"+rol)
                 .then(response=>{
                     if(response.status==200){
                         response.json().then(data =>{
@@ -54,6 +62,7 @@ export default {
                             });
                             }
                             else{
+                                console.log(data.idCurso)
                                 this.changeCurso(data.idCurso,data.name);
                             }
                         }
@@ -75,6 +84,10 @@ export default {
             this.$store.commit('setCurso',idCurso);
             this.selected=true;
             this.selectedName=name;
+            console.log(this.$store.state.curso);
+        },
+        edit(){
+            this.$store.commit('setPage',5);
         }
     },
     mounted(){
@@ -143,9 +156,9 @@ export default {
     font-size: 3vw;
 }
 #publicacionCurso{
-    width: 25vw;
-    height: 50vh;
-    background-color: yellow;
+    width: 30vw;
+    max-height: 30vw;
+  
 }
 #gridCurso{
     align-self: flex-end;
@@ -187,8 +200,8 @@ export default {
 #publicaciones{
     display: flex;
     flex-flow: column;
-    margin-bottom:3vw;
-    margin-top: 3vw;
+    margin-bottom:2vw;
+    margin-top: 2vw;
 }
 #newPubButtom{
     border: 2px solid white;
@@ -203,7 +216,7 @@ export default {
     flex-flow: column;
     justify-content: center;
     align-self: center;
-    margin-top: 3vw;
+    margin-top: 1vw;
 }
 #newPubButtom:hover{
     cursor: pointer;
