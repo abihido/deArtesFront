@@ -26,6 +26,7 @@ export default {
             imagenes:[],
             titulos:[],
             descrip:[],
+            links:[],
             index:0,
             max:0,
             xd2:undefined
@@ -34,7 +35,7 @@ export default {
     methods:{
         referenciar(){
             if(this.link!=""){
-                open(this.link);
+                open(this.links[this.index]);
             }
         },
         prev(){
@@ -63,6 +64,7 @@ export default {
                                 this.imagenes.push(element.imagen);
                                 this.descrip.push(element.descripcion);
                                 this.titulos.push(element.titulo);
+                                this.links.push(element.link);
                                 console.log(element);
                             }); 
                         }
@@ -90,6 +92,7 @@ export default {
                                 this.imagenes.push(element.imagen);
                                 this.descrip.push(element.descripcion);
                                 this.titulos.push(element.titulo);
+
                                 console.log(element);
                             }); 
                         }
@@ -145,6 +148,7 @@ export default {
     }
     #imgPublicacion{
         width: 80%;
+        max-height: 70%;
     }
     #textoPublicacion{
         visibility: hidden;
