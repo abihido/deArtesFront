@@ -123,7 +123,5 @@ border-top: 2px solid #49006E;
     background-color:  #49006E;
     cursor: pointer;
 }
-.menu:clic{
-    background-color:  #49006E;
-}
+
 </style>

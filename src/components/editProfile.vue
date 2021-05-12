@@ -29,7 +29,7 @@
             </label>
         </image-uploader>
         </div>
-        <div id="profileName" class="profileText">Nombre2:  {{this.info.name}}</div>
+        <div id="profileName" class="profileText">Nombre:  {{this.info.name}}</div>
         <div id="profileMail" class="profileText">Mail:  {{this.info.mail}}</div>
         <div id="profileCursos">
             <div>CURSOS INSCRITOS:</div>
