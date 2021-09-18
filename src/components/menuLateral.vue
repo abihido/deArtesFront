@@ -2,7 +2,8 @@
     <div id="backMenu">
         <div id="menuContent">
             <div id="cartelera" class="menu" v-on:click="cambiarPagina(0,'cartelera')">Cartelera</div>
-            <div id="cursos" class="menu" v-on:click="cambiarPagina(1,'cursos')">Cursos</div>
+            <div id="cursos" class="menu" v-on:click="cambiarPagina(9,'cursos')" v-if="this.$store.state.rol=='adm'">Cursos</div>
+            <div id="cursos" class="menu" v-on:click="cambiarPagina(1,'cursos')" v-else>Cursos</div>
             <div id ="biblioteca" class="menu" v-on:click="cambiarPagina(2,'biblioteca')">Biblioteca</div>
             <div id ="tareas" class="menu" v-on:click="cambiarPagina(3,'tareas')">Interactivo</div>
             <div id= "tienda" class="menu" v-on:click="cambiarPagina(4,'tienda')">Tienda</div>

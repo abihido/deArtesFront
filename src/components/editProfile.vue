@@ -29,8 +29,30 @@
             </label>
         </image-uploader>
         </div>
-        <div id="profileName" class="profileText">Nombre:  {{this.info.name}}</div>
-        <div id="profileMail" class="profileText">Mail:  {{this.info.mail}}</div>
+        <div class="subTitulo">Informacion Estudiante</div>
+        <div id="formularioEstudiante">
+            <div class="rowFormulario">
+                <div><label class="labelRegistro" for="Name">Name: </label><input class="inputEst" id="Name" v-model="info.name" type="text"/></div>
+                <div><label class="labelRegistro" for="Edad">Edad: </label><input class="inputEst" id="Edad" v-model="info.edad" type="number"/></div>
+            </div>
+            <div class="rowFormulario">
+                <div><label class="labelRegistro" for="Documento">Documento: </label><input class="inputEst" id="Documento" v-model="info.documento" type="text"/></div>
+                <div><label class="labelRegistro" for="Password">Contraseña: </label><input class="inputEst" id="Password" v-model="info.password" type="password"/></div>                
+            </div>
+            <div class="rowFormulario">
+                <div><label class="labelRegistro" for="Celular">Celular: </label><input class="inputEst" id="Celular" v-model="info.celular" type="text"/></div>
+                <div><label class="labelRegistro" for="Telefono">Telefono: </label><input class="inputEst" id="Telefono" v-model="info.telefono" type="text"/></div>
+            </div>
+            <div class="rowFormulario">
+                <div><label class="labelRegistro" for="Direccion">Direccion: </label><input class="inputEst" id="Direccion" v-model="info.direccion" type="text"/></div>
+                <div><label class="labelRegistro" for="Barrio">Barrio: </label><input class="inputEst" id="Barrio" v-model="info.barrio" type="text"/></div>
+            </div>
+            <div class="rowFormulario">
+                <div><label class="labelRegistro" for="Ciudad">Ciudad: </label><input class="inputEst" id="Ciudad" v-model="info.ciudad" type="text"/></div>
+                <div><label class="labelRegistro" for="Mail">Mail: </label><input class="inputEst" id="Mail" v-model="info.mail" type="mail"/></div>
+            </div>
+
+        </div>
         <div id="profileCursos">
             <div>CURSOS INSCRITOS:</div>
             <div id="contenedorOpciones" v-for="curso in names" :key="curso.idCurso">{{curso.name}}</div>
@@ -40,8 +62,28 @@
     <div id="showProfContainer" v-else>
         <img id="profilePicture" :src="this.$store.state.avatar" v-if="this.$store.state.avatar!=undefined">
         <img id="profilePicture" src="../resources/fotoDefault.png" v-else>
-        <div id="profileName" class="profileText">Nombre:  {{this.$store.state.name}}</div>
-        <div id="profileMail" class="profileText">Mail:  {{this.$store.state.mail}}</div>
+        <div class="subTitulo">Informacion Estudiante</div>
+        <div id="formularioEstudiante">
+            <div class="rowFormulario">
+                <div><label class="labelRegistro" for="Name">Name: </label><div class="showEst" id="ShowName"> {{info.name}}</div></div>
+                <div><label class="labelRegistro" for="Edad">Edad: </label><div class="showEst" id="ShowEdad">{{info.edad}}</div></div>
+            </div>
+            <div class="rowFormulario">
+                <div><label class="labelRegistro" for="Documento">Documento: </label><div class="showEst" id="ShowDocumento">{{info.documento}}</div></div>                
+                <div><label class="labelRegistro" for="Mail">Mail: </label><div class="showEst" id="ShowMail">{{info.mail}}</div></div>
+            </div>
+            <div class="rowFormulario">
+                <div><label class="labelRegistro" for="Celular">Celular: </label><div class="showEst" id="ShowCelular">{{info.celular}}</div></div>
+                <div><label class="labelRegistro" for="Telefono">Telefono: </label><div class="showEst" id="ShowTelefono">{{info.telefono}}</div></div>
+            </div>
+            <div class="rowFormulario">
+                <div><label class="labelRegistro" for="Direccion">Direccion: </label><div class="showEst" id="ShowDireccion">{{info.direccion}}</div></div>
+                <div><label class="labelRegistro" for="Barrio">Barrio: </label><div class="showEst" id="ShowBarrio">{{info.barrio}}</div></div>
+            </div>
+            <div class="rowFormulario">
+                <div><label class="labelRegistro" for="Ciudad">Ciudad: </label><div class="showEst" id="ShowCiudad">{{info.ciudad}}</div></div>
+            </div>
+        </div>
         <div id="profileCursos">
             <div>CURSOS INSCRITOS:</div>
             <div id="contenedorOpciones" v-for="curso in names" :key="curso.idCurso">{{curso.name}}</div>
@@ -81,8 +123,8 @@ export default {
               customClass: "swal2-error",
             });
         },
-        getInfo(){
-            fetch(request.SERVER_URL+"/estudiantes/"+this.$store.state.idSelected)
+        getInfo(id){
+            fetch(request.SERVER_URL+"/estudiantes/"+id)
                 .then(response=>{
                     if(response.status==200){
                         response.json().then(data =>{
@@ -103,12 +145,12 @@ export default {
                 }
             });
         },
-         getNames(){
+         getNames(id){
             let rol= 0;
             if(this.$store.state.rolSelected=='mat'){
                 rol=1;
             }
-            fetch(request.SERVER_URL+"/cursos/nombres/"+this.$store.state.idSelected+"/"+rol)
+            fetch(request.SERVER_URL+"/cursos/nombres/"+id+"/"+rol)
                 .then(response=>{
                     if(response.status==200){
                         response.json().then(data =>{
@@ -151,20 +193,26 @@ export default {
                     console.log("algo valio verga")
                 }
             })
+        },
+        functionBack(){
+            this.$store.commit("setPage",7);
         }
     },
     mounted(){
-        this.getNames();
-        if(this.$store.state.id==this.$store.state.idSelected){
-            this.info.id=this.$store.state.id;
-            this.info.name=this.$store.state.name;
-            this.info.mail=this.$store.state.mail;
-            this.info.avatar=this.$store.state.avatar;
+        document.addEventListener("backbutton", this.functionBack, false);
+        if(this.$store.state.rol=='adm'){
+            this.getNames(this.$store.state.idSelected);
 
+            this.getInfo(this.$store.state.idSelected);
         }
         else{
-            this.getInfo();
+            this.getNames(this.$store.state.id);
+
+            this.getInfo(this.$store.state.id);
         }
+    },
+    beforeDestroy () {
+        document.removeEventListener("backbutton", this.functionBack);
     }
 }
 </script>
@@ -184,7 +232,7 @@ export default {
         align-items: center;
     }
     .pictureNew{
-        border-radius: 40%;
+        border-radius: 50%;
     }
     .profileText{
         color: black;
@@ -207,7 +255,7 @@ export default {
         margin-left: 15%;
         align-self: flex-start;
         font-family: "Arista 2.0" ;
-        font-size: 4vw;
+        font-size: 2vw;
     }
     #contenedorOpciones{
         margin-left: 10%;

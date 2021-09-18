@@ -1,45 +1,33 @@
 <template>
     <div id="contenedorEstudiantesTotal">
         <div id="menuSelectorEstudiantes">
-            <div v-on:click="changeRol(0)">ESTUDIANTES</div>
-            <div v-on:click="changeRol(1)">PROFESORES</div>
-            <div v-on:click="changeRol(2)">PADRES</div>
+            <div class="menuBarra" id="menuEstudiantes" v-on:click="changeRol(0)">ESTUDIANTES</div>
+            <div class="menuBarra" id="menuProfesores"  v-on:click="changeRol(2)">PROFESORES</div>
         </div>
-        <div v-if="this.rol==0">
-            <div id="contenedorEstudiantes" v-for="estudiante in names" v-on:click="changePerson(estudiante.idEstudiantes,'est')"  :key="estudiante.idEstudiantes" >
-                <img id="profilePictureList" class="pictureNew" :src="estudiante.avatar" v-if="estudiante.avatar!=undefined">
-                <img id="profilePictureList" src="../resources/fotoDefault.png" v-else>
-                <div>
-                    {{estudiante.name}}
-                </div>
-                <div>
-                    {{estudiante.mail}}
+        
+        <div id="estudiantes" v-if="this.rol==0">
+            <div class="estudentGrid">
+                <div id="contenedorEstudiantes" v-for="estudiante in names" v-on:click="changePerson(estudiante.idEstudiantes,'est')"  :key="estudiante.idEstudiantes" >
+                    <img id="profilePictureList" class="pictureNew" :src="estudiante.avatar" v-if="estudiante.avatar!=undefined">
+                    <img id="profilePictureList" class="pictureNew" src="../resources/fotoDefault.png" v-else>
+                    <div>
+                        {{estudiante.name}}
+                    </div>
                 </div>
             </div>
+            <div  id="nuevoEstudianteB" v-on:click="changePage(8)"><img id="ImagenNuevoEstudiante" src="../resources/nuevoEstudiante.png" />CREAR ESTUDIANTE</div>
         </div>
-        <div v-else-if="this.rol==1">
+        <div id="estudiantes" v-else-if="this.rol==2">
+            <div class="estudentGrid">
                 <div id="contenedorEstudiantes" v-for="estudiante in names" v-on:click="changePerson(estudiante.idEstudiantes,'mat')"  :key="estudiante.idMaestros" >
-                <img id="profilePictureList" class="pictureNew" :src="estudiante.avatar" v-if="estudiante.avatar!=undefined">
-                <img id="profilePictureList" src="../resources/fotoDefault.png" v-else>
-                <div>
-                    {{estudiante.name}}
-                </div>
-                <div>
-                    {{estudiante.mail}}
+                    <img id="profilePictureList" class="pictureNew" :src="estudiante.avatar" v-if="estudiante.avatar!=undefined">
+                    <img id="profilePictureList" class="pictureNew" src="../resources/fotoDefault.png" v-else>
+                    <div>
+                        {{estudiante.name}}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div v-else-if="this.rol==2">
-                <div id="contenedorEstudiantes" v-for="estudiante in names" v-on:click="changePerson(estudiante.idEstudiantes,'pad')"  :key="estudiante.idPadres" >
-                <img id="profilePictureList" class="pictureNew" :src="estudiante.avatar" v-if="estudiante.avatar!=undefined">
-                <img id="profilePictureList" src="../resources/fotoDefault.png" v-else>
-                <div>
-                    {{estudiante.name}}
-                </div>
-                <div>
-                    {{estudiante.mail}}
-                </div>
-            </div>
+            <div id="nuevoEstudianteB" v-on:click="changePage(10)"><img id="ImagenNuevoEstudiante" src="../resources/nuevoEstudiante.png" /><div>CREAR PROFESOR</div></div>
         </div>
     </div>
 </template>
@@ -57,18 +45,36 @@ export default {
             this.$store.commit('setPersonSelected',{id:idPerson,rol:rolPerson});
             this.$store.commit("setPage",6);
         },
+        changePage(value){
+            this.$store.commit("setPage",value);
+        },
         changeRol(rol){
             this.rol=rol;
             this.names=[];
-            if(rol==1){
-                this.getMaestros();
-            }
+
             if(rol==2){
-                this.getPadres();
+                this.getMaestros();
+                this.cambiarFondo(1);
             }
             if(rol==0){
                 this.getEstudiantes();
+                this.cambiarFondo(0);
             }
+        },
+        cambiarFondo(id){
+            const prof = document.getElementById('menuProfesores');
+            const est = document.getElementById('menuEstudiantes');
+            if(id==1){
+                prof.style.backgroundColor = "#FCC601";
+                est.style.backgroundColor =  "#2A003F"
+
+            }
+            else{
+                est.style.backgroundColor = "#FCC601";
+                prof.style.backgroundColor =  "#2A003F"
+            }
+            
+            
         },
         getEstudiantes(){
             fetch(request.SERVER_URL+"/estudiantes/")
@@ -98,6 +104,7 @@ export default {
             fetch(request.SERVER_URL+"/maestros/")
                 .then(response=>{
                     if(response.status==200){
+                        this.names=[];
                         response.json().then(data =>{
                             data.forEach(element => {
                                 this.names.push(element);
@@ -145,42 +152,75 @@ export default {
     },
     mounted(){
         this.getEstudiantes();
+        this.cambiarFondo(0);
     }
 }
 </script>
 <style>
     #contenedorEstudiantes{
         display: flex;
-        flex-flow: row;
-        justify-content: space-around;
+        flex-flow: column;
+        align-items: center;
         font-family: "Arista 2.0" ;
         font-size: 2vw;
-        border: 3px solid black;
         margin:1vw;
         color:black;
         padding: 0.5vw;
-        border-radius: 10px;
     }
-    #contenedorEstudiantes:hover{
-        border:5px solid #555;
+    #estudiantes{
+        display: flex;
+        flex-flow: column;
+        align-items: center;
     }
     #profilePictureList{
-        height: 4vw;
+        height: 14vw;
+        width: 14vw;
+        
+    }
+    #ImagenNuevoEstudiante{
+        height: 14vw;
+        width: 14vw;
     }
     #contenedorEstudiantesTotal{
         height: 87vh;
-        overflow: scroll;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        overflow-y: scroll;
+    }
+    .estudentGrid{
+        display: grid;
+        grid-template-columns: repeat(3,25vw);
     }
     #menuSelectorEstudiantes{
         font-family: "Arista 2.0" ;
         cursor: pointer;
         display: flex;
-        color: black;
-        font-size: 1vw;
+        color: white;
+        font-size: 2vw;
         border:1px solid black;
         border-radius: 30px;
         margin: 1vw;
+        background-color: #2A003F;
         padding: 0.2vw;
-        justify-content: space-around;
+    }
+    #nuevoEstudianteB{
+        cursor: pointer;
+        font-family: "Arista 2.0" ;
+        display:flex;
+        color:black;
+        font-size: 1.5vw;
+        flex-flow: column;
+        width: 15vw;
+        align-items: center;
+        align-self: center;
+    }
+
+    .menuBarra{
+        border-radius: 30px;
+        padding-top: 0.5vw;
+        padding-left: 1vw;
+        padding-bottom: 0.5vw;
+        padding-right: 1vw;
     }
 </style>

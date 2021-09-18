@@ -12,6 +12,11 @@
         <div id="homeEditPub" v-else-if="this.$store.state.page==5"><editPublicacion></editPublicacion> </div>
         <div id="homeEditProf" v-else-if="this.$store.state.page==6"> <editProfile></editProfile> </div>
         <div id="estudiantes" v-else-if="this.$store.state.page==7"><estudiantes></estudiantes></div>
+        <div id="nuevoEstudiante" v-else-if="this.$store.state.page==8"><crearEstudiante></crearEstudiante></div>
+        <div id="nuevoCurso" v-else-if="this.$store.state.page==9"><crearCurso></crearCurso></div>
+        <div id="nuevoMaestro" v-else-if="this.$store.state.page==10"><crearMaestro></crearMaestro></div>
+        <div id="editCurso" v-else-if="this.$store.state.page==11"><editCursos></editCursos></div>
+        <div id="nuevaTarea" v-else-if="this.$store.state.page==12"><crearTarea></crearTarea></div>
       </div>
     </div>
   </div>
@@ -27,16 +32,22 @@ import tienda from '../components/tienda.vue'
 import editPublicacion from '../components/editPublicacion.vue'
 import editProfile from '../components/editProfile.vue'
 import Estudiantes from '../components/estudiantes.vue'
+import CrearEstudiante from '../components/crearEstudiante.vue'
+import crearCurso from '../components/crearCurso.vue'
+import crearMaestro from '../components/crearMaestro.vue'
+import editCursos from '../components/editCursos.vue'
+import crearTarea from '../components/crearTarea.vue'
 
 export default {
-  components: { barra,menuLateral,Cursos,Cartelera, Biblioteca,tienda,editPublicacion,editProfile, Estudiantes},
+  components: { barra,menuLateral,Cursos,Cartelera, Biblioteca,tienda,editPublicacion,editProfile, Estudiantes,CrearEstudiante,crearCurso,crearMaestro,editCursos,crearTarea},
   
 
 }
 </script>
   
 
-<style>
+<style,
+    CrearEstudiante>
 .home{
   height: 100vh;
   width: 100vw;

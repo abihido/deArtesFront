@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 import Login from '../views/Login.vue';
 import Home from '../views/Home.vue';
+import File from '../views/Files.vue';
 
 Vue.use(VueRouter)
 
@@ -16,7 +17,12 @@ const routes: Array<RouteConfig> = [
     path: '/login',
     name: 'Login',
     component: Login
-  }
+  },
+  {
+    path: '/file',
+    name: 'File',
+    component: File
+  },
 ]
 
 const router = new VueRouter({

@@ -17,7 +17,7 @@
                         <div id="newPubButtom" v-if="this.$store.state.rol=='mat'" v-on:click="edit()">Modificar Publicaciones</div> 
                     </div>
                     <div id="gridCurso">
-                        <div class="optionCurso" id="tareas"><img id="tareasImg" class="menuCurso" src="../resources/tareasLogo.png">Tareas</div>
+                        <div class="optionCurso" id="tareas" v-on:click="tarea()"><img id="tareasImg" class="menuCurso" src="../resources/tareasLogo.png">Tareas</div>
                         <div class="optionCurso" id="calificaciones" ><img id="calificacionesImg" class="menuCurso" src="../resources/calificacionesLogo.png">Calificaciones</div>
                         <div class="optionCurso" id="claseVivo"><img id="claseVivoImg" class="menuCurso" src="../resources/clasesLogo.png">Clase en Vivo</div>
                         <div class="optionCurso" id="claseGrabada"><img id="claseGrabadaImg" class="menuCurso" src="../resources/clasesGrabadasLogo.png">Clase Grabada</div>
@@ -88,6 +88,9 @@ export default {
         },
         edit(){
             this.$store.commit('setPage',5);
+        },
+        tarea(){
+            this.$store.commit('setPage',12);
         }
     },
     mounted(){
@@ -109,6 +112,10 @@ export default {
     font-size: 5vw;
     align-self: center;
     background-color: #49006E;
+}
+#cursosBack{
+    height: 87vh;
+    overflow-y: scroll;
 }
 #contenedorOpciones{
     align-self: flex-start;

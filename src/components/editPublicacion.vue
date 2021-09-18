@@ -1,5 +1,15 @@
 <template>
-    <div id="editContainer">
+    <div>
+    <div id="listaPublicaciones" v-if="selected==false">
+        <div id="contenedorEstudiantes" v-for="publicacion in publicaciones" v-on:click="changePerson(estudiante.idEstudiantes,'est')"  :key="publicacion.idPublicacion" >
+            <img id="profilePictureList" class="pictureNew" :src="publicacion.imagen" v-if="publicacion.imagen!=undefined">
+            <img id="profilePictureList" src="../resources/fotoDefault.png" v-else>
+            <div>
+                {{publicacion.titulo}}
+            </div>
+        </div>
+    </div>
+    <div id="editContainer" v-else>
         <div id="tituloPubGen">Crea Una Nueva Publicacion!</div>
         <div class="pubText">TITULO</div>
         <input class="inputPub" id="tituloPub" v-model="info.titulo" type="text"/>
@@ -32,7 +42,8 @@
                 <span class="upload-caption">{{ hasImage ? 'Replace' : 'Upload' }}</span>
             </label>
         </image-uploader>
-        <button id="publicar" v-on:click="setPublication()">Publicar</button>
+        <button class="botonSeleccion" id="publicar" v-on:click="setPublication()">Publicar</button>
+    </div>
     </div>
 </template>
 <script>
@@ -41,7 +52,9 @@ import ImageUploader from 'vue-image-upload-resize'
 export default {
     data(){
         return{
+            selected:false,
             hasImage:false,
+            publicaciones:[],
             info:{
                 imagen:undefined,
                 titulo:"",
@@ -71,6 +84,30 @@ export default {
               customClass: "swal2-error",
             });
         },
+        getPublicaciones(){
+            fetch(request.SERVER_URL+"/publicaciones/")
+                .then(response=>{
+                    if(response.status==200){
+                        response.json().then(data =>{
+                            data.forEach(element => {
+                                this.publicaciones.push(element);
+                                console.log(element);
+                            });
+                        }
+                        );
+                    }
+
+                    else{
+                        this.$fire({
+                            text: "Porfavor recargue la pagina",
+                            titleText: "ERROR VIENDO ESTUDIANTES",
+                            type: "error",
+                            confirmButtonColor: "#ff8e43",
+                            customClass: "swal2-error",
+                    });
+                }
+            });
+        },
         setPublication(){
             console.log(this.info);
             console.log(JSON.stringify(this.info));
@@ -83,6 +120,7 @@ export default {
             }).then(response=>{
                 if(response.status==200){
                     console.log("todo bien xd")
+                    
                 }
                 else{
                     console.log("algo valio verga")
@@ -91,6 +129,7 @@ export default {
         }
   },
   mounted(){
+      this.getPublicaciones();
       if(this.$store.state.rol=="adm"){
         this.info.rol=1
       }
@@ -102,6 +141,10 @@ export default {
 }
 </script>
 <style>
+#listaPublicaciones{
+    height: 87vh;
+    overflow-y: scroll;
+}
 #tituloPubGen{
     font-size: 3vw;
     grid-column: 1/3;
@@ -172,6 +215,9 @@ export default {
     margin: 2% 25% 2% 25%;
 
 
+
+}
+.botonSeleccion{
     background-color: #E77817;
     color:white;
     font-family: "Arista 2.0";
@@ -179,5 +225,7 @@ export default {
     height: 3vw;
     border: 2px solid white;
     border-radius: 10px;
+    cursor: pointer;
 }
+
 </style>
